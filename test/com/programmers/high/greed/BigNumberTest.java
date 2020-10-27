@@ -3,7 +3,7 @@ package com.programmers.high.greed;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class Out2Test {
+class BigNumberTest {
 
     /*
    1924	    2	94
@@ -14,6 +14,7 @@ class Out2Test {
     @Test
     void solution() {
 
+        Assertions.assertEquals("9876",new BigNumber().solution("98765432",3));
         Assertions.assertEquals("9",new BigNumber().solution("999",2));
         Assertions.assertEquals("94",new BigNumber().solution("1924",2));
         Assertions.assertEquals("3234",new BigNumber().solution("1231234",3));

@@ -1,7 +1,6 @@
 package com.programmers.high.dfs_bfs;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 /*
     두 개의 단어 begin, target과 단어의 집합 words가 있습니다. 아래와 같은 규칙을 이용하여 begin에서 target으로 변환하는 가장 짧은 변환 과정을 찾으려고 합니다.
@@ -33,7 +32,60 @@ import java.util.List;
 
     */
 public class WordTransForm {
+    private String target;
+
     public int solution(String begin, String target, String[] words) {
+        int answer = 0;
+        this.target = begin;
+
+        String startWord = null;
+        boolean[] check = new boolean[words.length];
+        for(int i =0; i<words.length; i++){
+            if(words[i].equals(target)){
+                startWord = words[i];
+                check[i] = true;
+            }
+        }
+        if(startWord == null){
+            return 0;
+        }
+        answer = dfs(words,check, startWord,0);
+
+        return answer == 51 ? 0 :answer;
+    }
+
+    int dfs(String[] words, boolean[] check, String word, int count) {
+
+        int min = 51;
+        if(isOneDiff(target,word)){
+            return count+1;
+        }
+        for(int i =0; i<words.length; i++){
+            if(check[i]) continue;
+
+            if(isOneDiff(words[i],word)){
+                check[i] = true;
+                min = Math.min( min, dfs(words,check,words[i],count+1) );
+                check[i] = false;
+            }
+        }
+        return min;
+    }
+
+    boolean isOneDiff(String word, String word2) {
+        int count = 0;
+        for(int i=0; i<word.length() ; i++){
+            if(word.charAt(i) != word2.charAt(i)){
+                count++;
+            }
+        }
+        return count == 1;
+    }
+}
+
+
+
+  /* public int solution(String begin, String target, String[] words) {
         int answer = 0;
         //target 이 있어야 변환이 가능.
         if( Arrays.stream(words).noneMatch(t->t.equals(target))){
@@ -68,5 +120,4 @@ public class WordTransForm {
         }
 
         return min;
-    }
-}
+    }*/
